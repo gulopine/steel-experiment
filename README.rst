@@ -5,10 +5,10 @@ Steel is a framework for specifying the format of binary data structures, such
 as files. It allows you to define a structure using a standard Python class,
 much like features found in Django and Elixir. Steel can provide the basis for:
 
- * metadata extraction,
- * format conversion,
- * data import and export,
- * compatibility layers
+    * metadata extraction,
+    * format conversion,
+    * data import and export,
+    * compatibility layers
 
 or anything else that relies on data stored in a binary format.
 
