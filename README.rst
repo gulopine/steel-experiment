@@ -25,6 +25,8 @@ To get an idea of how it works, start with a simple example to get the width and
 height of a PNG image. The `PNG specification`_ looks fairly complex, but for
 just getting the width and height, it gets pretty simple::
 
+    import steel
+
     class PNG(steel.Structure):
         signature = steel.FixedString(b'\x89PNG\x0d\x0a\x1a\x0a')
         ihdr_size = steel.Integer(size=4)
