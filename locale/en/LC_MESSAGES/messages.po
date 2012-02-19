@@ -1,17 +1,17 @@
-# English translations for PROJECT.
-# Copyright (C) 2012 ORGANIZATION
+# English translations for Steel.
+# Copyright (C) 2012 Marty Alchin
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+# Marty Alchin <marty@martyalchin.com>, 2012.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
-"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"Project-Id-Version: 0.1\n"
+"Report-Msgid-Bugs-To: marty@martyalchin.com\n"
 "POT-Creation-Date: 2012-02-18 16:37-0800\n"
 "PO-Revision-Date: 2012-02-18 16:41-0800\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: en <LL@li.org>\n"
+"Last-Translator: Marty Alchin <marty@martyalchin.com>\n"
+"Language-Team: en <marty@martyalchin.com>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
