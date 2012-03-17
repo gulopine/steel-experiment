@@ -1,5 +1,4 @@
 language: python
 python:
   - 3.2
-install: pip install nose
-script: nosetests
+script: python -m unittest discover -s tests -p *.py
