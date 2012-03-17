@@ -1,4 +1,5 @@
 language: python
 python:
   - 3.2
+install: 
 script: python -m unittest discover -s tests -p *.py
