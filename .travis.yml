@@ -1,5 +1,5 @@
 language: python
 python:
   - 3.2
-install: 
+install: echo 'Nothing to install'
 script: python -m unittest discover -s tests -p *.py
