@@ -10,6 +10,7 @@ class NameAwareOrderedDict(collections.OrderedDict):
     """
 
     def __setitem__(self, name, obj):
+        super(NameAwareOrderedDict, self).__setitem__(name, obj)
         if hasattr(obj, 'set_name'):
             obj.set_name(name)
 
