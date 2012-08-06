@@ -10,4 +10,3 @@ class BytesTests(unittest.TestCase):
     def test_decode(self):
         field = steel.Bytes(size=3)
         self.assertEqual(field.decode(b'abc'), b'abc')
-

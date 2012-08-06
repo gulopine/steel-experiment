@@ -64,6 +64,3 @@ class Field:
             return '<%s: %s>' % (self.name, type(self).__name__)
         else:
             return '<%s>' % type(self).__name__
-        
-
-

@@ -11,5 +11,3 @@ class Bytes(Field):
     def decode(self, value):
         # Nothing to do here
         return value
-
-
