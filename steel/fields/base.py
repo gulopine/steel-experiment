@@ -32,8 +32,7 @@ class Field:
 
     def set_name(self, name):
         self.name = name
-        label = self.label or name.replace('_', ' ')
-        self.label = label.title()
+        self.label = self.label or name.replace('_', ' ')
 
     def attach_to_class(self, cls):
         cls._fields[self.name] = self
