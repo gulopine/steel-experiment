@@ -7,7 +7,7 @@ NotProvided = object()
 
 
 class Field:
-    def __init__(self, label='', *, size, offset=0, default=NotProvided):
+    def __init__(self, label='', *, size, offset=None, default=NotProvided):
         self.label = label
         self.size = size
         self.offset = offset
@@ -36,6 +36,12 @@ class Field:
 
     def attach_to_class(self, cls):
         cls._fields[self.name] = self
+
+        if self.offset is None:
+            # Only set from the external offset if not supplied on the field
+            self.offset = cls.size
+
+        cls.size = self.offset + self.size
 
     def __get__(self, instance, owner):
         if not instance:

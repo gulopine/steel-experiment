@@ -34,6 +34,8 @@ class StructureMetaclass(type):
 
 
 class Structure(metaclass=StructureMetaclass):
+    size = 0
+
     def __init__(self, *args, **kwargs):
         self._file = len(args) > 0 and args[0] or None
         self._mode = self._file and 'rb' or 'wb'
