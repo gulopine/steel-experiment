@@ -18,5 +18,4 @@ setup(name='Steel',
           'Topic :: Software Development :: Libraries :: Application Frameworks',
           'Topic :: System :: Filesystems',
           ],
-      test_suite='tests',
      )
