@@ -29,3 +29,12 @@ class NameAwareOrderedDictTests(unittest.TestCase):
 
         with self.assertRaises(TypeError):
             self.d['example'] = ErrorObject()
+
+
+class SizeTests(unittest.TestCase):
+    def test_explicit_sizes(self):
+        class Test(steel.Structure):
+            field1 = steel.Bytes(size=2)
+            field2 = steel.Bytes(size=4)
+
+        self.assertEqual(Test.size, 6)
