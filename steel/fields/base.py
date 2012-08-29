@@ -21,7 +21,7 @@ class Field:
         # that number of bytes and return it directly.
         if self.size is not None:
             data = file.read(self.size)
-            if len(data) < size:
+            if len(data) < self.size:
                 # Can't read enough data from the stream to decode the field
                 raise EOFError
             return data
