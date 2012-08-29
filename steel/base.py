@@ -43,6 +43,10 @@ class Structure(metaclass=StructureMetaclass):
         if self._file and kwargs:
             raise TypeError(_('Cannot supply a file and attributes together'))
 
+        # Initialize raw value storage
+        self._raw_values = {}
+
+        # Values can be added explicitly here as well
         for name, value in kwargs.items():
             setattr(self, name, value)
 
