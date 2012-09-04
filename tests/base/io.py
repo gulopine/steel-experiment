@@ -21,7 +21,7 @@ class SeekIO(io.BytesIO):
         return super(SeekIO, self).seek(offset, *args, **kwargs)
 
 
-class SeekTests(unittest.TestCase):
+class TestData(object):
     def setUp(self):
         self.data = b'abc'
 
@@ -31,6 +31,30 @@ class SeekTests(unittest.TestCase):
             c = steel.Bytes(size=1)  # offset 2
         self.Structure = Test
 
+
+class LoadTests(TestData, unittest.TestCase):
+    def test_load(self):
+        # This should complete without error
+        file = io.BytesIO(self.data)
+        obj = self.Structure.load(file)
+
+        # Data has been populated already
+        self.assertEqual(obj._raw_values, {
+            'a': b'a',
+            'b': b'b',
+            'c': b'c',
+        })
+
+    def test_lazy_load(self):
+        # This should complete without error
+        file = io.BytesIO(self.data)
+        obj = self.Structure.load(file, eager=False)
+
+        # Data has not yet been loaded
+        self.assertEqual(obj._raw_values, {})
+
+
+class SeekTests(TestData, unittest.TestCase):
     def test_sequential_access(self):
         file = SeekIO(self.data)
         obj = self.Structure.load(file)
