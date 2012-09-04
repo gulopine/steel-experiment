@@ -56,7 +56,7 @@ class Structure(metaclass=StructureMetaclass):
 
         if eager:
             # Force each attribute onto the class immediately
-            for name, value in cls._fields.items():
+            for name in cls._fields:
                 getattr(obj, name)
 
         return obj
