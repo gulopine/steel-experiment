@@ -65,6 +65,15 @@ class Structure(metaclass=StructureMetaclass):
     def loads(cls, string, eager=True):
         return cls.load(io.BytesIO(string), eager=eager)
 
+    def dump(self, fp):
+        for name in self._fields:
+            fp.write(self._raw_values[name])
+
+    def dumps(self):
+        output = io.BytesIO()
+        self.dump(output)
+        return output.getvalue()
+
     def __str__(self):
         return _('<Binary Data>')
 

@@ -72,6 +72,19 @@ class LoadTests(TestData, unittest.TestCase):
         self.assertEqual(obj._raw_values, {})
 
 
+class DumpTests(TestData, unittest.TestCase):
+    def test_dump(self):
+        obj = self.Structure(a=b'a', b=b'b', c=b'c')
+        file = io.BytesIO()
+        obj.dump(file)
+        self.assertEqual(file.getvalue(), self.data)
+
+    def test_dumps(self):
+        obj = self.Structure(a=b'a', b=b'b', c=b'c')
+        string = obj.dumps()
+        self.assertEqual(string, self.data)
+
+
 class SeekTests(TestData, unittest.TestCase):
     def test_sequential_access(self):
         file = SeekIO(self.data)
