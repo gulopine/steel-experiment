@@ -49,4 +49,24 @@ class SeekTests(unittest.TestCase):
         self.assertEqual(obj.c, b'c')
         self.assertEqual(obj.a, b'a')
 
+        self.assertEqual(file.seeks, [0, 1, 2])
+
+    def test_lazy_sequential_access(self):
+        file = SeekIO(self.data)
+        obj = self.Structure.load(file, eager=False)
+
+        self.assertEqual(obj.a, b'a')
+        self.assertEqual(obj.b, b'b')
+        self.assertEqual(obj.c, b'c')
+
+        self.assertEqual(file.seeks, [0, 1, 2])
+
+    def test_lazy_random_access(self):
+        file = SeekIO(self.data)
+        obj = self.Structure.load(file, eager=False)
+
+        self.assertEqual(obj.b, b'b')
+        self.assertEqual(obj.c, b'c')
+        self.assertEqual(obj.a, b'a')
+
         self.assertEqual(file.seeks, [1, 2, 0])

@@ -48,10 +48,15 @@ class Structure(metaclass=StructureMetaclass):
     # Marshal/Pickle API
 
     @classmethod
-    def load(cls, fp):
+    def load(cls, fp, eager=True):
         obj = cls()
         obj._file = fp
         obj._mode = 'rb'
+
+        if eager:
+            # Force each attribute onto the class immediately
+            for name, value in cls._fields.items():
+                getattr(obj, name)
 
         return obj
 
