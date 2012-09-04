@@ -63,16 +63,7 @@ class Structure(metaclass=StructureMetaclass):
 
     @classmethod
     def loads(cls, string, eager=True):
-        obj = cls()
-        obj._file = io.BytesIO(string)
-        obj._mode = 'rb'
-
-        if eager:
-            # Force each attribute onto the class immediately
-            for name, value in cls._fields.items():
-                getattr(obj, name)
-
-        return obj
+        return cls.load(io.BytesIO(string), eager=eager)
 
     def __str__(self):
         return _('<Binary Data>')
