@@ -45,10 +45,28 @@ class LoadTests(TestData, unittest.TestCase):
             'c': b'c',
         })
 
+    def test_loads(self):
+        # This should complete without error
+        obj = self.Structure.loads(self.data)
+
+        # Data has been populated already
+        self.assertEqual(obj._raw_values, {
+            'a': b'a',
+            'b': b'b',
+            'c': b'c',
+        })
+
     def test_lazy_load(self):
         # This should complete without error
         file = io.BytesIO(self.data)
         obj = self.Structure.load(file, eager=False)
+
+        # Data has not yet been loaded
+        self.assertEqual(obj._raw_values, {})
+
+    def test_lazy_loads(self):
+        # This should complete without error
+        obj = self.Structure.loads(self.data, eager=False)
 
         # Data has not yet been loaded
         self.assertEqual(obj._raw_values, {})

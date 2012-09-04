@@ -1,4 +1,5 @@
 import collections
+import io
 from gettext import gettext as _
 
 
@@ -51,6 +52,19 @@ class Structure(metaclass=StructureMetaclass):
     def load(cls, fp, eager=True):
         obj = cls()
         obj._file = fp
+        obj._mode = 'rb'
+
+        if eager:
+            # Force each attribute onto the class immediately
+            for name, value in cls._fields.items():
+                getattr(obj, name)
+
+        return obj
+
+    @classmethod
+    def loads(cls, string, eager=True):
+        obj = cls()
+        obj._file = io.BytesIO(string)
         obj._mode = 'rb'
 
         if eager:
