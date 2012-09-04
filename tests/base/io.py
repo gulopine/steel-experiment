@@ -33,7 +33,7 @@ class SeekTests(unittest.TestCase):
 
     def test_sequential_access(self):
         file = SeekIO(self.data)
-        obj = self.Structure(file)
+        obj = self.Structure.load(file)
 
         self.assertEqual(obj.a, b'a')
         self.assertEqual(obj.b, b'b')
@@ -43,7 +43,7 @@ class SeekTests(unittest.TestCase):
 
     def test_random_access(self):
         file = SeekIO(self.data)
-        obj = self.Structure(file)
+        obj = self.Structure.load(file)
 
         self.assertEqual(obj.b, b'b')
         self.assertEqual(obj.c, b'c')

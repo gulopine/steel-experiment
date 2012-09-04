@@ -36,19 +36,24 @@ class StructureMetaclass(type):
 class Structure(metaclass=StructureMetaclass):
     size = 0
 
-    def __init__(self, *args, **kwargs):
-        self._file = len(args) > 0 and args[0] or None
-        self._mode = self._file and 'rb' or 'wb'
-
-        if self._file and kwargs:
-            raise TypeError(_('Cannot supply a file and attributes together'))
+    def __init__(self, **kwargs):
 
         # Initialize raw value storage
         self._raw_values = {}
 
-        # Values can be added explicitly here as well
+        # Values can be added explicitly
         for name, value in kwargs.items():
             setattr(self, name, value)
+
+    # Marshal/Pickle API
+
+    @classmethod
+    def load(cls, fp):
+        obj = cls()
+        obj._file = fp
+        obj._mode = 'rb'
+
+        return obj
 
     def __str__(self):
         return _('<Binary Data>')
