@@ -38,3 +38,24 @@ class SizeTests(unittest.TestCase):
             field2 = steel.Bytes(size=4)
 
         self.assertEqual(Test.size, 6)
+
+
+class InstantiationTests(unittest.TestCase):
+    def test_empty_args(self):
+        class Test(steel.Structure):
+            field1 = steel.Bytes(size=2)
+            field2 = steel.Bytes(size=4)
+
+        obj = Test()
+        self.assertEqual(hasattr(obj, '_mode'), False)
+
+    def test_filled_args(self):
+        class Test(steel.Structure):
+            field1 = steel.Bytes(size=2)
+            field2 = steel.Bytes(size=4)
+
+        obj = Test(field1=b'f1', field2=b'fld2')
+        self.assertEqual(hasattr(obj, '_mode'), False)
+
+        self.assertEqual(obj.field1, b'f1')
+        self.assertEqual(obj.field2, b'fld2')
