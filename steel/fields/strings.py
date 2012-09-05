@@ -5,6 +5,8 @@ __all__ = ['Bytes', 'String']
 
 
 class Bytes(Field):
+    "A stream of bytes that should be left unconverted"
+
     def encode(self, value):
         # Nothing to do here
         return value
@@ -15,6 +17,8 @@ class Bytes(Field):
 
 
 class String(Field):
+    "A string that gets converted using a specified encoding"
+
     def __init__(self, *args, encoding, **kwargs):
         # Bail out early if the encoding isn't valid
         codecs.lookup(encoding)
