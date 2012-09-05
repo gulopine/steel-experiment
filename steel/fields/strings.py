@@ -1,7 +1,8 @@
 import codecs
 from steel.fields import Field
+from steel.fields.mixin import Fixed
 
-__all__ = ['Bytes', 'String']
+__all__ = ['Bytes', 'String', 'FixedBytes', 'FixedString']
 
 
 class Bytes(Field):
@@ -31,3 +32,17 @@ class String(Field):
 
     def decode(self, value):
         return value.decode(self.encoding)
+
+
+class FixedBytes(Fixed, Bytes):
+    "A stream of bytes that will always be set to the same value"
+
+    # The mixin does the heavy lifting
+    pass
+
+
+class FixedString(Fixed, String):
+    "A stream of bytes that will always be set to the same value"
+
+    # The mixin does the heavy lifting
+    pass
