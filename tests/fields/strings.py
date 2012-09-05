@@ -18,6 +18,11 @@ class StringTests(unittest.TestCase):
             # Instantiate without an encoding
             steel.String(size=3)
 
+    def test_invalid_encoding(self):
+        with self.assertRaises(LookupError):
+            # Instantiate without an encoding
+            steel.String(size=3, encoding='invalid')
+
     def test_encoding(self):
         # Simple encoding
         field = steel.String(size=3, encoding='ascii')

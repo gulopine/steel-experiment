@@ -1,3 +1,4 @@
+import codecs
 from steel.fields import Field
 
 __all__ = ['Bytes', 'String']
@@ -15,6 +16,9 @@ class Bytes(Field):
 
 class String(Field):
     def __init__(self, *args, encoding, **kwargs):
+        # Bail out early if the encoding isn't valid
+        codecs.lookup(encoding)
+
         self.encoding = encoding
         super(String, self).__init__(*args, **kwargs)
 
