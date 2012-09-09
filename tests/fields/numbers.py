@@ -72,3 +72,13 @@ class IntegerTests(unittest.TestCase):
         field = steel.Integer(size=1)
         with self.assertRaises(ValueError):
             field.encode(-1)
+
+    def test_too_large_signed_encode(self):
+        field = steel.Integer(size=1, signed=True)
+        with self.assertRaises(ValueError):
+            field.encode(128)
+
+    def test_too_large_negative_signed_encode(self):
+        field = steel.Integer(size=1, signed=True)
+        with self.assertRaises(ValueError):
+            field.encode(-129)
