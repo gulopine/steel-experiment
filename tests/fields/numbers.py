@@ -47,3 +47,28 @@ class IntegerTests(unittest.TestCase):
         field = steel.Integer(size=1)
         with self.assertRaises(ValueError):
             field.encode(256)
+
+    def test_signed_encode(self):
+        field = steel.Integer(size=1, signed=True)
+        self.assertEqual(field.encode(1), b'\x01')
+        self.assertEqual(field.encode(-1), b'\xff')
+
+    def test_signed_decode(self):
+        field = steel.Integer(size=1, signed=True)
+        self.assertEqual(field.decode(b'\x01'), 1)
+        self.assertEqual(field.decode(b'\xff'), -1)
+
+    def test_signed_big_endian_encode(self):
+        field = steel.Integer(size=2, signed=True, endianness='>')
+        self.assertEqual(field.encode(2), b'\x00\x02')
+        self.assertEqual(field.encode(-2), b'\xff\xfe')
+
+    def test_signed_big_endian_decode(self):
+        field = steel.Integer(size=2, signed=True, endianness='>')
+        self.assertEqual(field.decode(b'\x00\x02'), 2)
+        self.assertEqual(field.decode(b'\xff\xfe'), -2)
+
+    def test_unsigned_negative_encode(self):
+        field = steel.Integer(size=1)
+        with self.assertRaises(ValueError):
+            field.encode(-1)

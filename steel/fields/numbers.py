@@ -15,9 +15,12 @@ class Integer(Field):
         8: 'Q',  # long long
     }
 
-    def __init__(self, *args, endianness='<', **kwargs):
+    def __init__(self, *args, signed=False, endianness='<', **kwargs):
         super(Integer, self).__init__(*args, **kwargs)
-        self.format_code = endianness + self.size_formats[self.size]
+        code = self.size_formats[self.size]
+        if signed:
+            code = code.lower()
+        self.format_code = endianness + code
 
     def encode(self, value):
         try:
