@@ -42,3 +42,8 @@ class IntegerTests(unittest.TestCase):
     def test_big_endian_decode(self):
         field = steel.Integer(size=2, endianness='>')
         self.assertEqual(field.decode(b'\x00\x02'), 2)
+
+    def test_too_large_encode(self):
+        field = steel.Integer(size=1)
+        with self.assertRaises(ValueError):
+            field.encode(256)
