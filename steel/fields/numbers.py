@@ -15,9 +15,9 @@ class Integer(Field):
         8: 'Q',  # long long
     }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, endianness='<', **kwargs):
         super(Integer, self).__init__(*args, **kwargs)
-        self.format_code = self.size_formats[self.size]
+        self.format_code = endianness + self.size_formats[self.size]
 
     def encode(self, value):
         return struct.pack(self.format_code, value)
