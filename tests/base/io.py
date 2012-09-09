@@ -21,7 +21,7 @@ class SeekIO(io.BytesIO):
         return super(SeekIO, self).seek(offset, *args, **kwargs)
 
 
-class TestData(object):
+class TestData:
     def setUp(self):
         self.data = b'abc'
 

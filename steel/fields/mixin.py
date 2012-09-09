@@ -1,4 +1,4 @@
-class Fixed(object):
+class Fixed:
     "A mixin that ensures the presence of a predetermined value"
 
     def __init__(self, value, *args, **kwargs):

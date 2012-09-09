@@ -13,7 +13,7 @@ class NameAwareOrderedDictTests(unittest.TestCase):
 
     def test_auto_name(self):
         # Objects with a set_name() method should be told their name
-        class NamedObject(object):
+        class NamedObject:
             def set_name(self, name):
                 self.name = name
 
@@ -22,7 +22,7 @@ class NameAwareOrderedDictTests(unittest.TestCase):
 
     def test_errors(self):
         # Make sure set_name() errors are raised, not swallowed
-        class ErrorObject(object):
+        class ErrorObject:
             "Just a simple object that errors out while setting its name"
             def set_name(self, name):
                 raise TypeError('Something went wrong')
