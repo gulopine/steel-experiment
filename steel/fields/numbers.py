@@ -20,8 +20,14 @@ class Integer(Field):
         self.format_code = endianness + self.size_formats[self.size]
 
     def encode(self, value):
-        return struct.pack(self.format_code, value)
+        try:
+            return struct.pack(self.format_code, value)
+        except struct.error as e:
+            raise ValueError(*e.args)
 
     def decode(self, value):
         # The index on the end is because unpack always returns a tuple
-        return struct.unpack(self.format_code, value)[0]
+        try:
+            return struct.unpack(self.format_code, value)[0]
+        except struct.error as e:
+            raise ValueError(*e.args)
