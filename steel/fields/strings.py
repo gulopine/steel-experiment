@@ -42,7 +42,7 @@ class FixedBytes(Fixed, Bytes):
 
 
 class FixedString(Fixed, String):
-    "A stream of bytes that will always be set to the same value"
+    "A string that will always be set to the same value"
 
     # The mixin does the heavy lifting
     pass
