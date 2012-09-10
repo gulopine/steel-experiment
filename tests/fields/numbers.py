@@ -101,3 +101,20 @@ class FixedIntegerTests(unittest.TestCase):
         # An incorrect value raises a ValueError
         with self.assertRaises(ValueError):
             field.decode(b'+')
+
+    def test_auto_size(self):
+        # Size isn't necessary if it can be inferred from the value
+        field = steel.FixedInteger(42)
+        self.assertEqual(field.size, 1)
+
+        field = steel.FixedInteger(420)
+        self.assertEqual(field.size, 2)
+
+        field = steel.FixedInteger(71420)
+        # This can technically be stored in 3 bytes, but the conversion
+        # requires a 4-byte field to hold that much data
+        self.assertEqual(field.size, 4)
+
+        # This value is too big even for an 8-byte integer
+        with self.assertRaises(ValueError):
+            steel.FixedInteger(100000000000000000000)
