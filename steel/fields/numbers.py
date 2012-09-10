@@ -1,7 +1,8 @@
 import struct
 from steel.fields import Field
+from steel.fields.mixin import Fixed
 
-__all__ = ['Integer']
+__all__ = ['Integer', 'FixedInteger']
 
 
 class Integer(Field):
@@ -34,3 +35,10 @@ class Integer(Field):
             return struct.unpack(self.format_code, value)[0]
         except struct.error as e:
             raise ValueError(*e.args)
+
+
+class FixedInteger(Fixed, Integer):
+    "An integer that will always be set to the same value"
+
+    # The mixin does the heavy lifting
+    pass

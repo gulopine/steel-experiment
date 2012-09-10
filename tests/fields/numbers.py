@@ -82,3 +82,22 @@ class IntegerTests(unittest.TestCase):
         field = steel.Integer(size=1, signed=True)
         with self.assertRaises(ValueError):
             field.encode(-129)
+
+
+class FixedIntegerTests(unittest.TestCase):
+    def test_encode(self):
+        field = steel.FixedInteger(42, size=1)
+
+        # It should encode the fixed value no matter what
+        self.assertEqual(field.encode(None), b'*')
+        self.assertEqual(field.encode(42), b'*')
+
+    def test_decode(self):
+        field = steel.FixedInteger(42, size=1)
+
+        # If the value is correct, everything works fine
+        self.assertEqual(field.decode(b'*'), 42)
+
+        # An incorrect value raises a ValueError
+        with self.assertRaises(ValueError):
+            field.decode(b'+')
