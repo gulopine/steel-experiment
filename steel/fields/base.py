@@ -55,6 +55,7 @@ class Field:
                 if self.default is not NotProvided:
                     return self.default
                 raise AttributeError(_('Attribute %r has no data') % self.name)
+
             instance._raw_values[self.name] = data
             instance.__dict__[self.name] = self.decode(data)
 
