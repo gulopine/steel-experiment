@@ -17,6 +17,6 @@ class Fixed:
 
         # Check that the value matches what it should be
         if value != self.value:
-            raise ValueError("Expected %r, got %r" % (self.value, value))
+            raise ValueError(_("Expected %r, got %r" % (self.value, value)))
 
         return value
