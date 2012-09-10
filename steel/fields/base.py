@@ -7,10 +7,13 @@ NotProvided = object()
 
 
 class Field:
-    def __init__(self, label='', *, size, offset=None, default=NotProvided):
+    def __init__(self, label='', *, size, offset=None, map=None,
+                 default=NotProvided):
         self.label = label
         self.size = size
         self.offset = offset
+        self.map = map or {}
+        self.inverse_map = dict(zip(self.map.values(), self.map.keys()))
         self.default = default
 
     def seek(self, file):
@@ -64,6 +67,26 @@ class Field:
     def __set__(self, instance, value):
         instance.__dict__[self.name] = value
         instance._raw_values[self.name] = self.encode(value)
+
+    def encode(self, value):
+        if self.inverse_map:
+            # Decode the value again according to the map
+            if value in self.inverse_map:
+                value = self.inverse_map[value]
+            else:
+                raise ValueError(_('%r is not a valid value' % value))
+
+        return value
+
+    def decode(self, value):
+        if self.map:
+            # Decode the value again according to the map
+            if value in self.map:
+                value = self.map[value]
+            else:
+                raise ValueError(_('%r is not a valid value' % value))
+
+        return value
 
     def __repr__(self):
         if hasattr(self, 'name'):

@@ -27,16 +27,20 @@ class Integer(Field):
 
     def encode(self, value):
         try:
-            return struct.pack(self.format_code, value)
+            value = struct.pack(self.format_code, value)
         except struct.error as e:
             raise ValueError(*e.args)
+
+        return super(Integer, self).encode(value)
 
     def decode(self, value):
         # The index on the end is because unpack always returns a tuple
         try:
-            return struct.unpack(self.format_code, value)[0]
+            value = struct.unpack(self.format_code, value)[0]
         except struct.error as e:
             raise ValueError(*e.args)
+
+        return super(Integer, self).decode(value)
 
 
 class FixedInteger(Fixed, Integer):

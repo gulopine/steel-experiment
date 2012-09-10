@@ -10,13 +10,8 @@ __all__ = ['Bytes', 'String', 'FixedBytes', 'FixedString']
 class Bytes(Field):
     _("A stream of bytes that should be left unconverted")
 
-    def encode(self, value):
-        # Nothing to do here
-        return value
-
-    def decode(self, value):
-        # Nothing to do here
-        return value
+    # Nothing to do here
+    pass
 
 
 class String(Field):
@@ -30,10 +25,14 @@ class String(Field):
         super(String, self).__init__(*args, **kwargs)
 
     def encode(self, value):
-        return value.encode(self.encoding)
+        value = value.encode(self.encoding)
+
+        return super(String, self).encode(value)
 
     def decode(self, value):
-        return value.decode(self.encoding)
+        value = value.decode(self.encoding)
+
+        return super(String, self).decode(value)
 
 
 class FixedBytes(Fixed, Bytes):
