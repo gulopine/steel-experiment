@@ -18,19 +18,23 @@ class String(Field):
     _("A string that gets converted using a specified encoding")
 
     def __init__(self, *args, encoding, **kwargs):
-        # Bail out early if the encoding isn't valid
-        codecs.lookup(encoding)
+        if hasattr(encoding, 'encode') and hasattr(encoding, 'decode'):
+            # Completely custom codecs can be used directly
+            self.codec = encoding
+        else:
+            # Otherwise, look it up in the registered system codecs
+            # This also bails out early if the encoding isn't valid
+            self.codec = codecs.lookup(encoding)
 
-        self.encoding = encoding
         super(String, self).__init__(*args, **kwargs)
 
     def encode(self, value):
-        value = value.encode(self.encoding)
+        value = self.codec.encode(value)[0]
 
         return super(String, self).encode(value)
 
     def decode(self, value):
-        value = value.decode(self.encoding)
+        value = self.codec.decode(value)[0]
 
         return super(String, self).decode(value)
 
