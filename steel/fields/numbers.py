@@ -8,7 +8,7 @@ __all__ = ['Integer', 'FixedInteger']
 
 
 class Integer(Field):
-    "An integer represented as a sequence and bytes"
+    _("An integer represented as a sequence and bytes")
 
     # These map a number of bytes to a struct format code
     size_formats = {
@@ -40,7 +40,7 @@ class Integer(Field):
 
 
 class FixedInteger(Fixed, Integer):
-    "An integer that will always be set to the same value"
+    _("An integer that will always be set to the same value")
 
     def __init__(self, value, *args, size=None, **kwargs):
         if size is None:

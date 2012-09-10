@@ -4,11 +4,11 @@ from gettext import gettext as _
 
 
 class NameAwareOrderedDict(collections.OrderedDict):
-    """
+    _("""
     A custom namespace that not only orders its items, but can
     also make those items aware of their names immediately.
     It also helps maintain the list of fields in the stack.
-    """
+    """)
 
     def __setitem__(self, name, obj):
         super(NameAwareOrderedDict, self).__setitem__(name, obj)

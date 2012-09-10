@@ -1,5 +1,8 @@
+from gettext import gettext as _
+
+
 class Fixed:
-    "A mixin that ensures the presence of a predetermined value"
+    _("A mixin that ensures the presence of a predetermined value")
 
     def __init__(self, value, *args, **kwargs):
         self.value = value

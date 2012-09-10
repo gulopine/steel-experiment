@@ -1,4 +1,6 @@
 import codecs
+from gettext import gettext as _
+
 from steel.fields import Field
 from steel.fields.mixin import Fixed
 
@@ -6,7 +8,7 @@ __all__ = ['Bytes', 'String', 'FixedBytes', 'FixedString']
 
 
 class Bytes(Field):
-    "A stream of bytes that should be left unconverted"
+    _("A stream of bytes that should be left unconverted")
 
     def encode(self, value):
         # Nothing to do here
@@ -18,7 +20,7 @@ class Bytes(Field):
 
 
 class String(Field):
-    "A string that gets converted using a specified encoding"
+    _("A string that gets converted using a specified encoding")
 
     def __init__(self, *args, encoding, **kwargs):
         # Bail out early if the encoding isn't valid
@@ -35,7 +37,7 @@ class String(Field):
 
 
 class FixedBytes(Fixed, Bytes):
-    "A stream of bytes that will always be set to the same value"
+    _("A stream of bytes that will always be set to the same value")
 
     def __init__(self, value, *args, size=None, **kwargs):
         if size is None:
@@ -46,7 +48,7 @@ class FixedBytes(Fixed, Bytes):
 
 
 class FixedString(Fixed, String):
-    "A string that will always be set to the same value"
+    _("A string that will always be set to the same value")
 
     def __init__(self, value, *args, size=None, encoding, **kwargs):
         if size is None:
