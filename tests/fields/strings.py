@@ -52,6 +52,11 @@ class FixedBytesTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             field.decode(b'def')
 
+    def test_auto_size(self):
+        # If no size is supplied, it can be inferred from the value
+        field = steel.FixedBytes(b'abc')
+        self.assertEqual(field.size, 3)
+
 
 class FixedStringTests(unittest.TestCase):
     def test_encode(self):
@@ -70,3 +75,8 @@ class FixedStringTests(unittest.TestCase):
         # An incorrect value raises a ValueError
         with self.assertRaises(ValueError):
             field.decode(b'def')
+
+    def test_auto_size(self):
+        # If no size is supplied, it can be inferred from the value
+        field = steel.FixedString('abc', encoding='ascii')
+        self.assertEqual(field.size, 3)

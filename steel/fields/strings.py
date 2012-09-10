@@ -37,12 +37,20 @@ class String(Field):
 class FixedBytes(Fixed, Bytes):
     "A stream of bytes that will always be set to the same value"
 
+    def __init__(self, value, *args, size=None, **kwargs):
+        if size is None:
+            size = len(value)
+        super(FixedBytes, self).__init__(value, *args, size=size, **kwargs)
+
     # The mixin does the heavy lifting
-    pass
 
 
 class FixedString(Fixed, String):
     "A string that will always be set to the same value"
 
+    def __init__(self, value, *args, size=None, encoding, **kwargs):
+        if size is None:
+            size = len(value.encode(encoding))
+        super(FixedString, self).__init__(value, *args, size=size, encoding=encoding, **kwargs)
+
     # The mixin does the heavy lifting
-    pass
