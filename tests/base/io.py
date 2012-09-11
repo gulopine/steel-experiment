@@ -39,37 +39,18 @@ class LoadTests(TestData, unittest.TestCase):
         obj = self.Structure.load(file)
 
         # Data has been populated already
-        self.assertEqual(obj._raw_values, {
-            'a': b'a',
-            'b': b'b',
-            'c': b'c',
-        })
+        self.assertEqual(obj.a, b'a')
+        self.assertEqual(obj.b, b'b')
+        self.assertEqual(obj.c, b'c')
 
     def test_loads(self):
         # This should complete without error
         obj = self.Structure.loads(self.data)
 
         # Data has been populated already
-        self.assertEqual(obj._raw_values, {
-            'a': b'a',
-            'b': b'b',
-            'c': b'c',
-        })
-
-    def test_lazy_load(self):
-        # This should complete without error
-        file = io.BytesIO(self.data)
-        obj = self.Structure.load(file, eager=False)
-
-        # Data has not yet been loaded
-        self.assertEqual(obj._raw_values, {})
-
-    def test_lazy_loads(self):
-        # This should complete without error
-        obj = self.Structure.loads(self.data, eager=False)
-
-        # Data has not yet been loaded
-        self.assertEqual(obj._raw_values, {})
+        self.assertEqual(obj.a, b'a')
+        self.assertEqual(obj.b, b'b')
+        self.assertEqual(obj.c, b'c')
 
 
 class DumpTests(TestData, unittest.TestCase):
@@ -105,23 +86,3 @@ class SeekTests(TestData, unittest.TestCase):
         self.assertEqual(obj.a, b'a')
 
         self.assertEqual(file.seeks, [0, 1, 2])
-
-    def test_lazy_sequential_access(self):
-        file = SeekIO(self.data)
-        obj = self.Structure.load(file, eager=False)
-
-        self.assertEqual(obj.a, b'a')
-        self.assertEqual(obj.b, b'b')
-        self.assertEqual(obj.c, b'c')
-
-        self.assertEqual(file.seeks, [0, 1, 2])
-
-    def test_lazy_random_access(self):
-        file = SeekIO(self.data)
-        obj = self.Structure.load(file, eager=False)
-
-        self.assertEqual(obj.b, b'b')
-        self.assertEqual(obj.c, b'c')
-        self.assertEqual(obj.a, b'a')
-
-        self.assertEqual(file.seeks, [1, 2, 0])

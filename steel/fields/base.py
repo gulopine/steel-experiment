@@ -46,27 +46,21 @@ class Field:
 
         cls.size = self.offset + self.size
 
-    def __get__(self, instance, owner):
-        if not instance:
-            return self
+    def read_value(self, file):
+        try:
+            self.seek(file)
+            data = self.read(file)
+        except EOFError:
+            if self.default is not NotProvided:
+                return self.default
+            raise AttributeError(_('Attribute %r has no data') % self.name)
 
-        if self.name not in instance.__dict__:
-            try:
-                self.seek(instance._file)
-                data = self.read(instance._file)
-            except EOFError:
-                if self.default is not NotProvided:
-                    return self.default
-                raise AttributeError(_('Attribute %r has no data') % self.name)
+        return self.decode(data)
 
-            instance._raw_values[self.name] = data
-            instance.__dict__[self.name] = self.decode(data)
-
-        return instance.__dict__[self.name]
-
-    def __set__(self, instance, value):
-        instance.__dict__[self.name] = value
-        instance._raw_values[self.name] = self.encode(value)
+    def write_value(self, file, value):
+        self.seek(file)
+        data = self.encode(value)
+        file.write(data)
 
     def encode(self, value):
         if self.inverse_map:

@@ -38,10 +38,6 @@ class Structure(metaclass=StructureMetaclass):
     size = 0
 
     def __init__(self, **kwargs):
-
-        # Initialize raw value storage
-        self._raw_values = {}
-
         # Values can be added explicitly
         for name, value in kwargs.items():
             setattr(self, name, value)
@@ -49,25 +45,23 @@ class Structure(metaclass=StructureMetaclass):
     # Marshal/Pickle API
 
     @classmethod
-    def load(cls, fp, eager=True):
+    def load(cls, fp):
         obj = cls()
-        obj._file = fp
-        obj._mode = 'rb'
 
-        if eager:
-            # Force each attribute onto the class immediately
-            for name in cls._fields:
-                getattr(obj, name)
+        for name, field in cls._fields.items():
+            value = field.read_value(fp)
+            setattr(obj, name, value)
 
         return obj
 
     @classmethod
-    def loads(cls, string, eager=True):
-        return cls.load(io.BytesIO(string), eager=eager)
+    def loads(cls, string):
+        return cls.load(io.BytesIO(string))
 
     def dump(self, fp):
-        for name in self._fields:
-            fp.write(self._raw_values[name])
+        for name, field in self._fields.items():
+            value = getattr(self, name)
+            field.write_value(fp, value)
 
     def dumps(self):
         output = io.BytesIO()
