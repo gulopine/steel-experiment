@@ -20,9 +20,15 @@ class Integer(Field):
 
     def __init__(self, *args, signed=False, endianness='<', **kwargs):
         super(Integer, self).__init__(*args, **kwargs)
-        code = self.size_formats[self.size]
+
+        try:
+            code = self.size_formats[self.size]
+        except KeyError:
+            raise TypeError(_('%r is not a valid integer size' % self.size))
+
         if signed:
             code = code.lower()
+
         self.format_code = endianness + code
 
     def encode(self, value):

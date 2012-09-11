@@ -35,6 +35,10 @@ class IntegerTests(unittest.TestCase):
         field = steel.Integer(size=8)
         self.assertEqual(field.decode(b'\x08\x00\x00\x00\x00\x00\x00\x00'), 8)
 
+    def test_invalid_size(self):
+        with self.assertRaises(TypeError):
+            steel.Integer(size=3)
+
     def test_big_endian_encode(self):
         field = steel.Integer(size=2, endianness='>')
         self.assertEqual(field.encode(2), b'\x00\x02')
