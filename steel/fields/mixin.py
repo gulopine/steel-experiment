@@ -6,7 +6,10 @@ class Fixed:
 
     def __init__(self, value, *args, **kwargs):
         self.value = value
-        super(Fixed, self).__init__(*args, **kwargs)
+
+        # Pass the value in as a default as well, to make
+        # sure it goes through when no value was supplied
+        super(Fixed, self).__init__(*args, default=value, **kwargs)
 
     def encode(self, value):
         # Always encode the fixed value
