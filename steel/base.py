@@ -61,8 +61,15 @@ class Structure(metaclass=StructureMetaclass):
 
     def dump(self, fp):
         for name, field in self._fields.items():
-            value = getattr(self, name)
-            field.write_value(fp, value)
+            if name in self.__dict__:
+                # Checking in the instance dictionary is necessary because
+                # getattr() will fall back to class attributes and find fields
+                value = getattr(self, name)
+                field.write_value(fp, value)
+            else:
+                # At least try to write without a value, in case the field
+                # has a default or can otherwise write what it needs to write
+                field.write_value(fp)
 
     def dumps(self):
         with io.BytesIO() as fp:

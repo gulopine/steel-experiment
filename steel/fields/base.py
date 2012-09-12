@@ -57,7 +57,13 @@ class Field:
 
         return self.decode(data)
 
-    def write_value(self, file, value):
+    def write_value(self, file, value=NotProvided):
+        if value is NotProvided:
+            if self.default is NotProvided:
+                raise ValueError(_('Attribute %r has no value' % self.name))
+            else:
+                value = self.default
+
         self.seek(file)
         data = self.encode(value)
         file.write(data)
