@@ -53,7 +53,7 @@ class Field:
         except EOFError:
             if self.default is not NotProvided:
                 return self.default
-            raise AttributeError(_('Attribute %r has no data') % self.name)
+            raise ValueError(_('Attribute %r has no data') % self.name)
 
         return self.decode(data)
 
