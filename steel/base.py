@@ -34,7 +34,7 @@ class StructureMetaclass(type):
                 attr.attach_to_class(cls)
 
 
-class Structure(metaclass=StructureMetaclass):
+class StructureBase:
     size = 0
 
     def __init__(self, **kwargs):
@@ -81,3 +81,7 @@ class Structure(metaclass=StructureMetaclass):
 
     def __repr__(self):
         return '<%s: %s>' % (type(self).__name__, self)
+
+
+class Structure(StructureBase, metaclass=StructureMetaclass):
+    pass
