@@ -47,7 +47,9 @@ class InstantiationTests(unittest.TestCase):
             field2 = steel.Bytes(size=4)
 
         obj = Test()
-        self.assertEqual(hasattr(obj, '_mode'), False)
+
+        self.assertNotIn('field1', obj.__dict__)
+        self.assertNotIn('field2', obj.__dict__)
 
     def test_filled_args(self):
         class Test(steel.Structure):
@@ -55,7 +57,6 @@ class InstantiationTests(unittest.TestCase):
             field2 = steel.Bytes(size=4)
 
         obj = Test(field1=b'f1', field2=b'fld2')
-        self.assertEqual(hasattr(obj, '_mode'), False)
 
         self.assertEqual(obj.field1, b'f1')
         self.assertEqual(obj.field2, b'fld2')
