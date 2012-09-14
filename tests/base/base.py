@@ -60,3 +60,27 @@ class InstantiationTests(unittest.TestCase):
 
         self.assertEqual(obj.field1, b'f1')
         self.assertEqual(obj.field2, b'fld2')
+
+
+class StructureTupleTests(unittest.TestCase):
+    def test_empty_args(self):
+        class Test(steel.StructureTuple):
+            field1 = steel.Bytes(size=2)
+            field2 = steel.Bytes(size=4)
+
+        obj = Test()
+
+        self.assertIsInstance(obj, tuple)
+
+        self.assertEqual(obj.field1, None)
+        self.assertEqual(obj.field2, None)
+
+    def test_filled_args(self):
+        class Test(steel.Structure):
+            field1 = steel.Bytes(size=2)
+            field2 = steel.Bytes(size=4)
+
+        obj = Test(field1=b'f1', field2=b'fld2')
+
+        self.assertEqual(obj.field1, b'f1')
+        self.assertEqual(obj.field2, b'fld2')

@@ -85,3 +85,16 @@ class StructureBase:
 
 class Structure(StructureBase, metaclass=StructureMetaclass):
     pass
+
+
+class StructureTupleMetaclass(StructureMetaclass):
+    def __init__(cls, name, bases, attrs, **options):
+        super(StructureTupleMetaclass, cls).__init__(name, bases, attrs, **options)
+
+        cls._namedtuple = collections.namedtuple(name, cls._fields.keys())
+
+
+class StructureTuple(StructureBase, metaclass=StructureTupleMetaclass):
+    def __new__(cls, **kwargs):
+        data = (kwargs.get(name, None) for name in cls._fields)
+        return cls._namedtuple(*data)
