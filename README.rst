@@ -5,10 +5,10 @@ Steel is a framework for specifying the format of binary data structures, such
 as files. It allows you to define a structure using a standard Python class,
 much like features found in Django and Elixir. Steel can provide the basis for:
 
-    * metadata extraction,
-    * format conversion,
-    * data import and export,
-    * compatibility layers
+* metadata extraction,
+* format conversion,
+* data import and export,
+* compatibility layers
 
 or anything else that relies on data stored in a binary format.
 
@@ -120,11 +120,11 @@ understands, while still providing a way to skip chunks it doesn't know about.
 This allows new features to be added to the format without impacting existing
 programs. It's sort of like XML for binary data, but Steel makes it much less
 annoying to work with. In general, it works by requiring some very basic things
-from every chunk, regardless of what it contains::
+from every chunk, regardless of what it contains:
 
-     * an ID, which indicates what kind of data is in the chunk
-     * the size of the chunk's data
-     * the data itself
+* an ID, which indicates what kind of data is in the chunk
+* the size of the chunk's data
+* the data itself
 
 Every chunk must contain at least these three things in order to work properly,
 though the data block may be empty if the size is zero. PNG also includes a
