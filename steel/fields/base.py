@@ -46,12 +46,15 @@ class Field:
 
         cls.size = self.offset + self.size
 
+    def has_default(self):
+        return self.default is not NotProvided
+
     def read_value(self, file):
         try:
             self.seek(file)
             data = self.read(file)
         except EOFError:
-            if self.default is not NotProvided:
+            if self.has_default():
                 return self.default
             raise ValueError(_('Attribute %r has no data') % self.name)
 
@@ -59,10 +62,10 @@ class Field:
 
     def write_value(self, file, value=NotProvided):
         if value is NotProvided:
-            if self.default is NotProvided:
-                raise ValueError(_('Attribute %r has no value' % self.name))
-            else:
+            if self.has_default():
                 value = self.default
+            else:
+                raise ValueError(_('Attribute %r has no value' % self.name))
 
         self.seek(file)
         data = self.encode(value)
