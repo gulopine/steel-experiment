@@ -76,6 +76,11 @@ class StructureBase:
             self.dump(fp)
             return fp.getvalue()
 
+    @classmethod
+    def has_default(cls):
+        # A structure only has a default if all its fields have defaults
+        return all(f.has_default() for f in cls._fields.values())
+
     def __str__(self):
         return _('<Binary Data>')
 
