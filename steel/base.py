@@ -2,7 +2,7 @@ import collections
 import io
 from gettext import gettext as _
 
-from steel.decorators import classproperty
+from steel.decorators import classproperty, classinstancemethod
 
 
 class NameAwareOrderedDict(collections.OrderedDict):
@@ -61,8 +61,15 @@ class StructureBase:
         with io.BytesIO(string) as fp:
             return cls.load(fp)
 
-    def dump(self, fp):
-        for name, field in self._fields.items():
+    @classinstancemethod
+    def dump(cls, self, fp):
+        # This can be called either directly on a class or on one of its instances.
+        # If on an instance, self is the instance itself, like usual; if called on
+        # a class, self will be the first positional argument passed in instead.
+        # This way, you can call obj.dump(fp), which is a more OO approach, or
+        # or Structure.dump(obj, fp), which matches the standard dump/load API.
+
+        for name, field in cls._fields.items():
             if name in self.__dict__:
                 # Checking in the instance dictionary is necessary because
                 # getattr() will fall back to class attributes and find fields
@@ -73,9 +80,10 @@ class StructureBase:
                 # has a default or can otherwise write what it needs to write
                 field.write_value(fp)
 
-    def dumps(self):
+    @classinstancemethod
+    def dumps(cls, self):
         with io.BytesIO() as fp:
-            self.dump(fp)
+            cls.dump(self, fp)
             return fp.getvalue()
 
     @classmethod
@@ -113,3 +121,15 @@ class StructureTuple(StructureBase, metaclass=StructureTupleMetaclass):
     def __new__(cls, **kwargs):
         data = (kwargs.get(name, None) for name in cls._fields)
         return cls._namedtuple(*data)
+
+    @classinstancemethod
+    def dump(cls, obj, fp):
+        # Because __new__ returnes a namedtuple, it's not likely that this will
+        # ever be called as an instance method, but we'll still plan for it.
+        # Otherwise, we could simply have this be a classmethod.
+
+        for name, field in cls._fields.items():
+            # In this case, obj is expected to be a namedtuple, so getattr()
+            # can't accidentally fall back onto class attributes.
+            value = getattr(obj, name)
+            field.write_value(fp, value)
