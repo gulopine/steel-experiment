@@ -2,6 +2,8 @@ import collections
 import io
 from gettext import gettext as _
 
+from steel.decorators import classproperty
+
 
 class NameAwareOrderedDict(collections.OrderedDict):
     _("""
@@ -80,6 +82,14 @@ class StructureBase:
     def has_default(cls):
         # A structure only has a default if all its fields have defaults
         return all(f.has_default() for f in cls._fields.values())
+
+    @classproperty
+    def default(cls):
+        if self.has_default():
+            values = dict((k, v.default) for (k, v) in cls._fields.items())
+            return cls(**values)
+        else:
+            raise ValueError("No default available for %s structures" % cls.__name__)
 
     def __str__(self):
         return _('<Binary Data>')
