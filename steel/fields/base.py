@@ -65,7 +65,7 @@ class Field:
             if self.has_default():
                 value = self.default
             else:
-                raise ValueError(_('Attribute %r has no value' % self.name))
+                raise ValueError(_('Attribute %r has no value') % self.name)
 
         self.seek(file)
         data = self.encode(value)
@@ -77,7 +77,7 @@ class Field:
             if value in self.inverse_map:
                 value = self.inverse_map[value]
             else:
-                raise ValueError(_('%r is not a valid value' % value))
+                raise ValueError(_('%r is not a valid value') % value)
 
         return value
 
@@ -87,7 +87,7 @@ class Field:
             if value in self.map:
                 value = self.map[value]
             else:
-                raise ValueError(_('%r is not a valid value' % value))
+                raise ValueError(_('%r is not a valid value') % value)
 
         return value
 

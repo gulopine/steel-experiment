@@ -24,7 +24,7 @@ class Integer(Field):
         try:
             code = self.size_formats[self.size]
         except KeyError:
-            raise TypeError(_('%r is not a valid integer size' % self.size))
+            raise TypeError(_('%r is not a valid integer size') % self.size)
 
         if signed:
             code = code.lower()
